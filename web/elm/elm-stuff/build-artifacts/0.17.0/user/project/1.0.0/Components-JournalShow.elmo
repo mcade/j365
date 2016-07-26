@@ -1,0 +1,50 @@
+var _user$project$Components_JournalShow$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$h3,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(model.title)
+					])),
+				A2(
+				_elm_lang$html$Html$a,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$href(model.url)
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(
+						A2(_elm_lang$core$Basics_ops['++'], 'URL: ', model.url))
+					])),
+				A2(
+				_elm_lang$html$Html$br,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[])),
+				A2(
+				_elm_lang$html$Html$span,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'Posted by: ',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								model.postedBy,
+								A2(_elm_lang$core$Basics_ops['++'], ' On: ', model.postedOn))))
+					]))
+			]));
+};
+var _user$project$Components_JournalShow$NoOp = {ctor: 'NoOp'};

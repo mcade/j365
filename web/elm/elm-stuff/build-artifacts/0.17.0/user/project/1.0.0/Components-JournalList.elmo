@@ -1,0 +1,154 @@
+var _user$project$Components_JournalList$decodeJournalData = A5(
+	_elm_lang$core$Json_Decode$object4,
+	_user$project$Journal$Model,
+	A2(_elm_lang$core$Json_Decode_ops[':='], 'title', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode_ops[':='], 'url', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode_ops[':='], 'posted_by', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode_ops[':='], 'posted_on', _elm_lang$core$Json_Decode$string));
+var _user$project$Components_JournalList$decodeJournalList = _elm_lang$core$Json_Decode$list(_user$project$Components_JournalList$decodeJournalData);
+var _user$project$Components_JournalList$decodeJournalFetch = A2(
+	_elm_lang$core$Json_Decode$at,
+	_elm_lang$core$Native_List.fromArray(
+		['data']),
+	_user$project$Components_JournalList$decodeJournalList);
+var _user$project$Components_JournalList$journals = {
+	journals: _elm_lang$core$Native_List.fromArray(
+		[
+			{title: 'Journal 1', url: 'http://google.com', postedBy: 'Author', postedOn: '6/25/16'},
+			{title: 'Journal 2', url: 'http://google.com', postedBy: 'Author 2', postedOn: '6/26'},
+			{title: 'Journal 3', url: 'http://google.com', postedBy: 'Author 3', postedOn: '6/27'}
+		])
+};
+var _user$project$Components_JournalList$initialModel = {
+	journals: _elm_lang$core$Native_List.fromArray(
+		[])
+};
+var _user$project$Components_JournalList$Model = function (a) {
+	return {journals: a};
+};
+var _user$project$Components_JournalList$RouteToNewPage = function (a) {
+	return {ctor: 'RouteToNewPage', _0: a};
+};
+var _user$project$Components_JournalList$FetchFail = function (a) {
+	return {ctor: 'FetchFail', _0: a};
+};
+var _user$project$Components_JournalList$FetchSucceed = function (a) {
+	return {ctor: 'FetchSucceed', _0: a};
+};
+var _user$project$Components_JournalList$fetchJournals = function () {
+	var url = '/api/journals';
+	return A3(
+		_elm_lang$core$Task$perform,
+		_user$project$Components_JournalList$FetchFail,
+		_user$project$Components_JournalList$FetchSucceed,
+		A2(_evancz$elm_http$Http$get, _user$project$Components_JournalList$decodeJournalFetch, url));
+}();
+var _user$project$Components_JournalList$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'NoOp':
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'Fetch':
+				return {ctor: '_Tuple2', _0: model, _1: _user$project$Components_JournalList$fetchJournals};
+			case 'FetchSucceed':
+				return {
+					ctor: '_Tuple2',
+					_0: _user$project$Components_JournalList$Model(_p0._0),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'FetchFail':
+				var _p1 = _p0._0;
+				if (_p1.ctor === 'UnexpectedPayload') {
+					return A2(
+						_elm_lang$core$Debug$log,
+						_p1._0,
+						{ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none});
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			default:
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _user$project$Components_JournalList$Fetch = {ctor: 'Fetch'};
+var _user$project$Components_JournalList$NoOp = {ctor: 'NoOp'};
+var _user$project$Components_JournalList$ShowView = function (a) {
+	return {ctor: 'ShowView', _0: a};
+};
+var _user$project$Components_JournalList$journalLink = function (journal) {
+	return A2(
+		_elm_lang$html$Html$a,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$href(
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'#journal/',
+					A2(_elm_lang$core$Basics_ops['++'], journal.title, '/show'))),
+				_elm_lang$html$Html_Events$onClick(
+				_user$project$Components_JournalList$RouteToNewPage(
+					_user$project$Components_JournalList$ShowView(journal)))
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html$text(' (Show)')
+			]));
+};
+var _user$project$Components_JournalList$renderJournal = function (journal) {
+	return A2(
+		_elm_lang$html$Html$li,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_user$project$Journal$view(journal),
+						_user$project$Components_JournalList$journalLink(journal)
+					]))
+			]));
+};
+var _user$project$Components_JournalList$renderJournals = function (model) {
+	return A2(_elm_lang$core$List$map, _user$project$Components_JournalList$renderJournal, model.journals);
+};
+var _user$project$Components_JournalList$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('journal-list')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$h2,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Journal List')
+					])),
+				A2(
+				_elm_lang$html$Html$button,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Events$onClick(_user$project$Components_JournalList$Fetch),
+						_elm_lang$html$Html_Attributes$class('btn btn-primary')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Fetch Journals')
+					])),
+				A2(
+				_elm_lang$html$Html$ul,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_user$project$Components_JournalList$renderJournals(model))
+			]));
+};
+var _user$project$Components_JournalList$ListView = {ctor: 'ListView'};
